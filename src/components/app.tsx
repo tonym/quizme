@@ -3,21 +3,25 @@ import { useMemo, useState } from 'preact/hooks';
 import { Route, Router } from 'preact-router';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, styled, Theme, ThemeProvider } from '@mui/material/styles';
 import ColorModeContext from '../contexts/color-mode-context';
-import Home from '../routes/home';
+import { Home } from '../routes/home/home';
 import NotFoundPage from '../routes/notfound';
-import Header from './header';
+import { Header } from './header/';
+
+const QContainer = styled(Container)({
+  paddingTop: 80
+});
 
 const App: FunctionalComponent = () => {
   return (
-    <Container maxWidth={false}>
+    <QContainer>
       <Header />
       <Router>
         <Route path="/" component={Home} />
         <NotFoundPage default />
       </Router>
-    </Container>
+    </QContainer>
   );
 };
 

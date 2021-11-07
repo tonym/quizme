@@ -21,7 +21,7 @@ const QButton = styled(Button)(({ theme }: HeaderProps) => {
   };
 });
 
-const Header: FunctionalComponent = () => {
+export const Header: FunctionalComponent = () => {
   const colorMode = useContext(ColorModeContext);
   const theme = useTheme();
 
@@ -45,5 +45,3 @@ const Header: FunctionalComponent = () => {
     </Box>
   );
 };
-
-export default Header;
