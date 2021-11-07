@@ -1,27 +1,55 @@
 import { FunctionalComponent, h } from 'preact';
+import { useMemo, useState } from 'preact/hooks';
 import { Route, Router } from 'preact-router';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
+import ColorModeContext from '../contexts/color-mode-context';
 import Home from '../routes/home';
-import Profile from '../routes/profile';
 import NotFoundPage from '../routes/notfound';
 import Header from './header';
 
-const theme = createTheme({});
-
 const App: FunctionalComponent = () => {
   return (
-    <div id="preact_root">
-      <ThemeProvider theme={theme}>
-        <Header />
-        <Router>
-          <Route path="/" component={Home} />
-          <Route path="/profile/" component={Profile} user="me" />
-          <Route path="/profile/:user" component={Profile} />
-          <NotFoundPage default />
-        </Router>
-      </ThemeProvider>
-    </div>
+    <Container maxWidth={false}>
+      <Header />
+      <Router>
+        <Route path="/" component={Home} />
+        <NotFoundPage default />
+      </Router>
+    </Container>
   );
 };
 
-export default App;
+export default function ToggleColorMode() {
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: (): void => {
+        setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
+      }
+    }),
+    []
+  );
+
+  const theme: Theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode
+        }
+      }),
+    [mode]
+  );
+
+  return (
+    <div id="preact_root">
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </div>
+  );
+}

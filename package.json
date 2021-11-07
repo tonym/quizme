@@ -10,17 +10,8 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "jest ./tests"
   },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "preact",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "ignorePatterns": [
-      "build/"
-    ]
-  },
   "dependencies": {
+    "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.6",
     "@mui/styled-engine-sc": "^5.0.4",
     "preact": "^10.3.1",
