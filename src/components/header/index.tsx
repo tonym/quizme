@@ -1,29 +1,37 @@
 import { FunctionalComponent, h } from 'preact';
-import { Link } from 'preact-router/match';
-import { styled } from '@mui/material/styles';
-import style from './style.css';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { styled, Theme } from '@mui/material/styles';
 
-const Button = styled('button')({
-  backgroundColor: 'red'
+interface HeaderProps {
+  theme: Theme;
+}
+
+const QButton = styled(Button)(({ theme }: HeaderProps) => {
+  return {
+    color: theme.palette.common.white
+  };
 });
 
 const Header: FunctionalComponent = () => {
   return (
-    <header class={style.header}>
-      <h1>Preact App</h1>
-      <Button>button</Button>
-      <nav>
-        <Link activeClassName={style.active} href="/">
-          Home
-        </Link>
-        <Link activeClassName={style.active} href="/profile">
-          Me
-        </Link>
-        <Link activeClassName={style.active} href="/profile/john">
-          John
-        </Link>
-      </nav>
-    </header>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar>
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            QuizMe
+          </Typography>
+          <nav>
+            <QButton href="/" variant="text">
+              Home
+            </QButton>
+          </nav>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 
