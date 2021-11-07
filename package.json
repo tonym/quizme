@@ -48,6 +48,12 @@
     "setupFiles": [
       "<rootDir>/tests/__mocks__/browserMocks.ts",
       "<rootDir>/tests/__mocks__/setupTests.ts"
-    ]
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "@mui/styled-engine": "@mui/styled-engine-sc"
+    }
   }
 }
