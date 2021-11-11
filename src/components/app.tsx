@@ -10,7 +10,7 @@ import NotFoundPage from '../routes/notfound';
 import { Header } from './header/';
 
 const QContainer = styled(Container)({
-  paddingTop: 80
+  paddingTop: 100
 });
 
 const App: FunctionalComponent = () => {
