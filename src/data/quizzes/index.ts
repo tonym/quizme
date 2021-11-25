@@ -1,4 +1,4 @@
-import { Quiz } from '../../../types';
+import { Quiz } from '../../types';
 import numbersQuiz from './numbers';
 
 export const quizzes: Quiz[] = prepareQuizzes();
