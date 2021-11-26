@@ -1,5 +1,5 @@
-import { Fragment, FunctionalComponent, h } from 'preact';
-import { useState } from 'preact/hooks';
+import { Fragment, FunctionalComponent, h, RefObject } from 'preact';
+import { useRef, useState } from 'preact/hooks';
 import Box from '@mui/material/Box';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import IconButton from '@mui/material/IconButton';
@@ -9,7 +9,7 @@ import Check from '@mui/icons-material/Check';
 import PlayCircle from '@mui/icons-material/PlayCircle';
 import PlayCircleOutlined from '@mui/icons-material/PlayCircleFilledOutlined';
 import PauseCircle from '@mui/icons-material/PauseCircle';
-import { Quiz } from '../../types';
+import { Quiz, QuizQuestion } from '../../types';
 
 interface QuizPlayerProps {
   quiz: Quiz | null;
@@ -31,23 +31,55 @@ const pauseIcon = <PauseCircle />;
 const stopIcon = <PlayCircleOutlined />;
 
 export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
+  const { quiz } = props;
+
+  const [answer, setAnswer] = useState('');
+  const [nextDisabled, setNextDisabled] = useState(true);
+  const [playing, setPlaying] = useState(false);
+  const [question, setQuestion] = useState<QuizQuestion>();
+  const [started, setStarted] = useState(false);
+
+  const answerInput: RefObject<HTMLInputElement> = useRef(null);
+
+  function changeAnswer(event: React.KeyboardEvent<HTMLInputElement>): any {
+    const { value } = event.target as HTMLInputElement;
+    setAnswer(value);
+  }
+
+  function playQuestion(): void {
+    if (quiz) {
+      const currentQuestion: QuizQuestion = question ? question : quiz.questions[Math.floor(Math.random() * quiz.questions.length)];
+      setQuestion(currentQuestion);
+      setAnswer('');
+      quizReader.text = currentQuestion.question;
+      window.speechSynthesis.speak(quizReader);
+    }
+    answerInput.current && answerInput.current.focus();
+  }
+
   return (
     <Box sx={{ paddingTop: '32px' }}>
-      {props.quiz ? (
+      {quiz ? (
         <Fragment>
           <Typography gutterBottom variant="h6">
-            {props.quiz.description}
+            {quiz.description}
           </Typography>
-          <TextField fullWidth variant="outlined"></TextField>
+          <TextField fullWidth onKeyUp={changeAnswer} inputRef={answerInput} value={answer} variant="outlined"></TextField>
           <Box sx={{ display: 'flex', mt: 0.5 }}>
             <Box sx={{ flex: 1 }}>
-              <IconButton size="large">{playIcon}</IconButton>
+              <IconButton onClick={playQuestion} size="large">
+                {playIcon}
+              </IconButton>
             </Box>
             <Box sx={{ mr: 1 }}>
-              <IconButton size="large">{checkIcon}</IconButton>
+              <IconButton disabled={answer.length === 0} size="large">
+                {checkIcon}
+              </IconButton>
             </Box>
             <Box>
-              <IconButton size="large">{nextIcon}</IconButton>
+              <IconButton disabled={nextDisabled} size="large">
+                {nextIcon}
+              </IconButton>
             </Box>
           </Box>
         </Fragment>
