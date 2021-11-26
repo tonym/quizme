@@ -18,8 +18,10 @@ export const Quiz: FunctionalComponent = () => {
   return (
     <Box>
       <FormControl fullWidth>
-        <InputLabel id="quiz-select-label">Select quiz</InputLabel>
-        <Select labelId="quiz-select-label" id="quiz-select" onChange={handleChange} value={`${quiz}`} variant="filled">
+        <Select labelId="quiz-select-label" id="quiz-select" onChange={handleChange} value={`${quiz}`} variant="outlined">
+          <MenuItem key="-1" value="-1">
+            Select quiz
+          </MenuItem>
           {quizzes.map((quiz, index) => {
             return (
               <MenuItem key={index} value={index}>
