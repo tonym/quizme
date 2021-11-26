@@ -1,5 +1,5 @@
-import { Fragment, FunctionalComponent, h, RefObject } from 'preact';
-import { useRef, useState } from 'preact/hooks';
+import { FunctionalComponent, h, RefObject } from 'preact';
+import { useLayoutEffect, useRef, useState } from 'preact/hooks';
 import Box from '@mui/material/Box';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import IconButton from '@mui/material/IconButton';
@@ -7,8 +7,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Check from '@mui/icons-material/Check';
 import PlayCircle from '@mui/icons-material/PlayCircle';
-import PlayCircleOutlined from '@mui/icons-material/PlayCircleFilledOutlined';
-import PauseCircle from '@mui/icons-material/PauseCircle';
 import { Quiz, QuizQuestion } from '../../types';
 
 interface QuizPlayerProps {
@@ -24,26 +22,37 @@ window.speechSynthesis.onvoiceschanged = () => {
   quizReader.voice = voices[0];
 };
 
-const checkIcon = <Check />;
-const nextIcon = <ArrowForward />;
-const playIcon = <PlayCircle />;
-const pauseIcon = <PauseCircle />;
-const stopIcon = <PlayCircleOutlined />;
-
 export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   const { quiz } = props;
 
   const [answer, setAnswer] = useState('');
   const [nextDisabled, setNextDisabled] = useState(true);
-  const [playing, setPlaying] = useState(false);
   const [question, setQuestion] = useState<QuizQuestion>();
-  const [started, setStarted] = useState(false);
+  const [result, setResult] = useState('');
+  const [resultColor, setResultColor] = useState('success');
 
-  const answerInput: RefObject<HTMLInputElement> = useRef(null);
+  const answerInputRef: RefObject<HTMLInputElement> = useRef(null);
+  const playButtonRef: RefObject<HTMLButtonElement> = useRef(null);
+
+  useLayoutEffect(() => {
+    focusPlayButton();
+  }, [quiz]);
 
   function changeAnswer(event: React.KeyboardEvent<HTMLInputElement>): any {
     const { value } = event.target as HTMLInputElement;
     setAnswer(value);
+  }
+
+  function focusPlayButton(): void {
+    playButtonRef.current && playButtonRef.current.focus();
+  }
+
+  function nextQuestion(): void {
+    setAnswer('');
+    setNextDisabled(true);
+    setQuestion(undefined);
+    setResult('');
+    focusPlayButton();
   }
 
   function playQuestion(): void {
@@ -54,35 +63,56 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
       quizReader.text = currentQuestion.question;
       window.speechSynthesis.speak(quizReader);
     }
-    answerInput.current && answerInput.current.focus();
+    answerInputRef.current && answerInputRef.current.focus();
+  }
+
+  function submitForm(event: Event): void {
+    event.preventDefault();
+    if (nextDisabled) {
+      if (question && question.answer.includes(answer.trim())) {
+        setResultColor('success.main');
+        setResult('Correct');
+      } else {
+        setResultColor('error.main');
+        setResult(`Almost. The correct answer is ${question && question.answer}`);
+      }
+      setNextDisabled(false);
+    } else {
+      nextQuestion();
+    }
   }
 
   return (
     <Box sx={{ paddingTop: '32px' }}>
       {quiz ? (
-        <Fragment>
+        <form id="quiz-form" onSubmit={submitForm}>
           <Typography gutterBottom variant="h6">
             {quiz.description}
           </Typography>
-          <TextField fullWidth onKeyUp={changeAnswer} inputRef={answerInput} value={answer} variant="outlined"></TextField>
-          <Box sx={{ display: 'flex', mt: 0.5 }}>
-            <Box sx={{ flex: 1 }}>
-              <IconButton onClick={playQuestion} size="large">
-                {playIcon}
+          <TextField fullWidth onKeyUp={changeAnswer} inputRef={answerInputRef} value={answer} variant="outlined"></TextField>
+          <Box sx={{ alignItems: 'center', display: 'flex', mt: 0.5 }}>
+            <Box>
+              <IconButton onClick={playQuestion} ref={playButtonRef} size="large">
+                <PlayCircle />
               </IconButton>
             </Box>
+            <Box sx={{ flex: 1 }}>
+              <Typography align="center" sx={{ color: resultColor }}>
+                {result}
+              </Typography>
+            </Box>
             <Box sx={{ mr: 1 }}>
-              <IconButton disabled={answer.length === 0} size="large">
-                {checkIcon}
+              <IconButton disabled={answer.length === 0} size="large" type="submit">
+                <Check />
               </IconButton>
             </Box>
             <Box>
-              <IconButton disabled={nextDisabled} size="large">
-                {nextIcon}
+              <IconButton onClick={nextQuestion} disabled={nextDisabled} size="large">
+                <ArrowForward />
               </IconButton>
             </Box>
           </Box>
-        </Fragment>
+        </form>
       ) : null}
     </Box>
   );
