@@ -74,7 +74,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
         setResult('Correct');
       } else {
         setResultColor('error.main');
-        setResult(`Almost. The correct answer is ${question && question.answer}`);
+        setResult(`Almost. The correct answer is ${question && question.answer[0]}`);
       }
       setNextDisabled(false);
     } else {

@@ -1,10 +1,12 @@
 import { Quiz } from '../../types';
-import numbersQuiz from './numbers';
+import NumbersQuiz from './numbers';
+import PrepositionsQuiz from './prepositions';
+import QuestionWordsQuiz from './question_words';
 
 export const quizzes: Quiz[] = prepareQuizzes();
 
 function prepareQuizzes(): Quiz[] {
-  const quizzes: Quiz[] = [...numbersQuiz];
+  const quizzes: Quiz[] = [...NumbersQuiz, ...PrepositionsQuiz, ...QuestionWordsQuiz];
 
-  return quizzes;
+  return quizzes.sort((a, b) => a.name.localeCompare(b.name, 'cs'));
 }
