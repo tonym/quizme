@@ -69,7 +69,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   function submitForm(event: Event): void {
     event.preventDefault();
     if (nextDisabled) {
-      if (question && question.answer.includes(answer.trim())) {
+      if (question && question.answer.find(item => item.localeCompare(answer.trim(), undefined, { sensitivity: 'base' }) === 0)) {
         setResultColor('success.main');
         setResult('Correct');
       } else {
