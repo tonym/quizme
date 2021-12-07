@@ -48,8 +48,8 @@ const TripQuiz: Quiz[] = [
     name: 'Jak se zeptat na cestu (konverzace)',
     questions: [
       {
-        answer: ['far'],
-        question: 'daleko'
+        answer: ['Good day, can you tell me, please, where is the pharmacy?', 'Hello, do you know, please, where the pharmacy is?'],
+        question: 'Dobrý den, nevíte, prosím Vás, kde je lékárna?'
       },
       {
         answer: ['approximately'],

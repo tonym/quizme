@@ -8,6 +8,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Check from '@mui/icons-material/Check';
 import PlayCircle from '@mui/icons-material/PlayCircle';
+import Shuffle from '@mui/icons-material/Shuffle';
+import ShuffleOn from '@mui/icons-material/ShuffleOn';
 import { Quiz, QuizQuestion } from '../../types';
 
 const fuse = new Fuse([]);
@@ -29,8 +31,10 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   const { quiz } = props;
 
   const [answer, setAnswer] = useState('');
+  const [playing, setPlaying] = useState(false);
   const [nextDisabled, setNextDisabled] = useState(true);
   const [question, setQuestion] = useState<QuizQuestion>();
+  const [shuffle, setShuffle] = useState(true);
   const [result, setResult] = useState('');
   const [resultColor, setResultColor] = useState('success');
 
@@ -60,20 +64,38 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   function nextQuestion(): void {
     setAnswer('');
     setNextDisabled(true);
-    setQuestion(undefined);
+    setPlaying(false);
+    setQuestion(shuffle ? undefined : question);
     setResult('');
     focusPlayButton();
   }
 
   function playQuestion(): void {
     if (quiz) {
-      const currentQuestion: QuizQuestion = question ? question : quiz.questions[Math.floor(Math.random() * quiz.questions.length)];
+      const currentQuestion: QuizQuestion = playing && question ? question : selectQuestion();
       setQuestion(currentQuestion);
       setAnswer('');
+      setPlaying(true);
       quizReader.text = currentQuestion.question;
       window.speechSynthesis.speak(quizReader);
     }
     answerInputRef.current && answerInputRef.current.focus();
+  }
+
+  function selectQuestion(): QuizQuestion {
+    let ret: QuizQuestion;
+    if (shuffle) {
+      ret = quiz!.questions[Math.floor(Math.random() * quiz!.questions.length)];
+    } else {
+      let index = question
+        ? quiz!.questions.findIndex(item => {
+            return item === question;
+          }) + 1
+        : 0;
+      index = index < quiz!.questions.length ? index : 0;
+      ret = quiz!.questions[index];
+    }
+    return ret;
   }
 
   function submitForm(event: Event): void {
@@ -93,6 +115,10 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
     }
   }
 
+  function toggleShuffle(): void {
+    setShuffle(!shuffle);
+  }
+
   return (
     <Box sx={{ paddingTop: '32px' }}>
       {quiz ? (
@@ -102,9 +128,14 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
           </Typography>
           <TextField fullWidth onKeyUp={changeAnswer} inputRef={answerInputRef} value={answer} variant="outlined"></TextField>
           <Box sx={{ alignItems: 'center', display: 'flex', mt: 0.5 }}>
-            <Box>
+            <Box sx={{ mr: 1 }}>
               <IconButton onClick={playQuestion} ref={playButtonRef} size="large">
                 <PlayCircle />
+              </IconButton>
+            </Box>
+            <Box>
+              <IconButton onClick={toggleShuffle} size="large">
+                {shuffle ? <ShuffleOn /> : <Shuffle />}
               </IconButton>
             </Box>
             <Box sx={{ flex: 1 }}>
