@@ -1,5 +1,6 @@
 import { FunctionalComponent, h, RefObject } from 'preact';
 import { useLayoutEffect, useRef, useState } from 'preact/hooks';
+import Fuse from 'fuse.js';
 import Box from '@mui/material/Box';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import IconButton from '@mui/material/IconButton';
@@ -8,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Check from '@mui/icons-material/Check';
 import PlayCircle from '@mui/icons-material/PlayCircle';
 import { Quiz, QuizQuestion } from '../../types';
+
+const fuse = new Fuse([]);
 
 interface QuizPlayerProps {
   quiz: Quiz | null;
@@ -43,6 +46,13 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
     setAnswer(value);
   }
 
+  function checkAnswer(): boolean {
+    const collection = question ? question.answer : [];
+    fuse.setCollection(collection as never[]);
+    const result = fuse.search(answer);
+    return result.length > 0;
+  }
+
   function focusPlayButton(): void {
     playButtonRef.current && playButtonRef.current.focus();
   }
@@ -69,7 +79,8 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   function submitForm(event: Event): void {
     event.preventDefault();
     if (nextDisabled) {
-      if (question && question.answer.find(item => item.localeCompare(answer.trim(), undefined, { sensitivity: 'base' }) === 0)) {
+      const result = checkAnswer();
+      if (result) {
         setResultColor('success.main');
         setResult('Correct');
       } else {
