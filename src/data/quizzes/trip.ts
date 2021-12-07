@@ -42,6 +42,84 @@ const TripQuiz: Quiz[] = [
         question: 'zahnout'
       }
     ]
+  },
+  {
+    description: 'Opakujte v angličtině',
+    name: 'V hotelu',
+    questions: [
+      {
+        answer: ['great', 'awesome'],
+        question: 'výborně'
+      },
+      {
+        answer: ['to check', 'check'],
+        question: 'zkontrolovat'
+      },
+      {
+        answer: ['to sign', 'sign'],
+        question: 'podepsat'
+      },
+      {
+        answer: ['clean', 'tidy'],
+        question: 'uklizený'
+      },
+      {
+        answer: ['to agree', 'agree'],
+        question: 'souhlasit'
+      },
+      {
+        answer: ['single room'],
+        question: 'jednolůžkový pokoj'
+      },
+      {
+        answer: ['elevator', 'lift'],
+        question: 'výtah'
+      },
+      {
+        answer: ['opposite'],
+        question: 'naproti'
+      },
+      {
+        answer: ['over there'],
+        question: 'támhle'
+      },
+      {
+        answer: ['personally'],
+        question: 'osobně'
+      },
+      {
+        answer: ['passport'],
+        question: 'pas'
+      },
+      {
+        answer: ['to clean'],
+        question: 'uklidit'
+      },
+      {
+        answer: ['to check out', 'check out', 'sign out', 'log out', 'log off'],
+        question: 'odhlásit se'
+      },
+      {
+        answer: ['booked', 'reserved'],
+        question: 'rezervovaný'
+      },
+      {
+        answer: ['receipt', 'bill'],
+        question: 'účet'
+      },
+      {
+        answer: ['notify', 'report', 'announce'],
+        question: 'ohlásit'
+      },
+      {
+        answer: ['key'],
+        question: 'klíč'
+      },
+      {
+        answer: ['staircase', 'stairs'],
+        question: 'schodiště'
+      }
+    ]
   }
 ];
 
