@@ -29,12 +29,12 @@ export const Header: FunctionalComponent = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            QuizMe
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: '"Redressed"' }}>
+            Český poslech
           </Typography>
           <nav>
             <QButton href="/" variant="text">
-              Home
+              Domů
             </QButton>
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
               {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}

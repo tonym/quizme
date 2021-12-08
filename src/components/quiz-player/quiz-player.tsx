@@ -8,9 +8,11 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Check from '@mui/icons-material/Check';
 import PlayCircle from '@mui/icons-material/PlayCircle';
+import PlayCircleOutline from '@mui/icons-material/PlayCircleOutline';
 import Shuffle from '@mui/icons-material/Shuffle';
 import ShuffleOn from '@mui/icons-material/ShuffleOn';
 import { Quiz, QuizQuestion } from '../../types';
+import { PlayCircleOutlined } from '@mui/icons-material';
 
 const fuse = new Fuse([]);
 
@@ -130,7 +132,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
           <Box sx={{ alignItems: 'center', display: 'flex', mt: 0.5 }}>
             <Box sx={{ mr: 1 }}>
               <IconButton onClick={playQuestion} ref={playButtonRef} size="large">
-                <PlayCircle />
+                {playing ? <PlayCircle /> : <PlayCircleOutline />}
               </IconButton>
             </Box>
             <Box>
