@@ -14,8 +14,6 @@ import Shuffle from '@mui/icons-material/Shuffle';
 import ShuffleOn from '@mui/icons-material/ShuffleOn';
 import { Quiz, QuizQuestion } from '../../types';
 
-const fuse = new Fuse([]);
-
 interface QuizPlayerProps {
   quiz: Quiz | null;
 }
@@ -60,6 +58,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
 
   function checkAnswer(): boolean {
     const collection = question ? question.answer : [];
+    const fuse = new Fuse([], { threshold });
     fuse.setCollection(collection as never[]);
     const result = fuse.search(answer);
     return result.length > 0;
