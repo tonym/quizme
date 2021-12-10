@@ -6,13 +6,13 @@ import ArrowForward from '@mui/icons-material/ArrowForward';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Slider from '@mui/material/Slider';
 import Check from '@mui/icons-material/Check';
 import PlayCircle from '@mui/icons-material/PlayCircle';
 import PlayCircleOutline from '@mui/icons-material/PlayCircleOutline';
 import Shuffle from '@mui/icons-material/Shuffle';
 import ShuffleOn from '@mui/icons-material/ShuffleOn';
 import { Quiz, QuizQuestion } from '../../types';
-import { PlayCircleOutlined } from '@mui/icons-material';
 
 const fuse = new Fuse([]);
 
@@ -36,9 +36,10 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   const [playing, setPlaying] = useState(false);
   const [nextDisabled, setNextDisabled] = useState(true);
   const [question, setQuestion] = useState<QuizQuestion>();
-  const [shuffle, setShuffle] = useState(true);
   const [result, setResult] = useState('');
   const [resultColor, setResultColor] = useState('success');
+  const [shuffle, setShuffle] = useState(true);
+  const [threshold, setThreshold] = useState(0.6);
 
   const answerInputRef: RefObject<HTMLInputElement> = useRef(null);
   const playButtonRef: RefObject<HTMLButtonElement> = useRef(null);
@@ -50,6 +51,11 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   function changeAnswer(event: React.KeyboardEvent<HTMLInputElement>): any {
     const { value } = event.target as HTMLInputElement;
     setAnswer(value);
+  }
+
+  function changeThreshold(event: Event): any {
+    const { value } = event.target as HTMLInputElement;
+    setThreshold(+value);
   }
 
   function checkAnswer(): boolean {
@@ -135,12 +141,25 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
                 {playing ? <PlayCircle /> : <PlayCircleOutline />}
               </IconButton>
             </Box>
-            <Box>
+            <Box sx={{ mr: 2 }}>
               <IconButton onClick={toggleShuffle} size="large">
                 {shuffle ? <ShuffleOn /> : <Shuffle />}
               </IconButton>
             </Box>
             <Box sx={{ flex: 1 }}>
+              <Slider
+                marks={true}
+                max={1}
+                min={0}
+                onChange={changeThreshold}
+                size="small"
+                step={0.1}
+                sx={{ mt: 1 }}
+                value={threshold}
+                valueLabelDisplay="auto"
+              />
+            </Box>
+            <Box sx={{ flex: 3 }}>
               <Typography align="center" sx={{ color: resultColor }}>
                 {result}
               </Typography>
