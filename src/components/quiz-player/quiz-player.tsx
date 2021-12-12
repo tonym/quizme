@@ -34,7 +34,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   const [playing, setPlaying] = useState(false);
   const [nextDisabled, setNextDisabled] = useState(true);
   const [question, setQuestion] = useState<QuizQuestion>();
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState<any>();
   const [resultColor, setResultColor] = useState('success');
   const [shuffle, setShuffle] = useState(true);
   const [threshold, setThreshold] = useState(0.6);
@@ -111,10 +111,16 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
       const result = checkAnswer();
       if (result) {
         setResultColor('success.main');
-        setResult('Correct');
+        setResult(<Check sx={{ fontSize: '9rem', fontWeight: 900 }} />);
       } else {
         setResultColor('error.main');
-        setResult(`Almost. The correct answer is ${question && question.answer[0]}`);
+        setResult(
+          <span>
+            Správná odpověď je:
+            <br />
+            <Box sx={{ fontSize: '6rem', fontWeight: 700, mt: 2 }}>{question && question.answer[0]}</Box>
+          </span>
+        );
       }
       setNextDisabled(false);
     } else {
@@ -158,11 +164,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
                 valueLabelDisplay="auto"
               />
             </Box>
-            <Box sx={{ flex: 3 }}>
-              <Typography align="center" sx={{ color: resultColor }}>
-                {result}
-              </Typography>
-            </Box>
+            <Box sx={{ flex: 3 }}></Box>
             <Box sx={{ mr: 1 }}>
               <IconButton disabled={answer.length === 0} size="large" type="submit">
                 <Check />
@@ -174,6 +176,9 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
               </IconButton>
             </Box>
           </Box>
+          <Typography align="center" sx={{ color: resultColor, mt: 8 }} variant="h4">
+            {result}
+          </Typography>
         </form>
       ) : null}
     </Box>
