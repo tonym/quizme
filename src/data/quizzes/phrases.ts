@@ -6,6 +6,10 @@ const PhrasesQuiz: Quiz[] = [
     name: 'Gramatika',
     questions: [
       {
+        answer: ['how long'],
+        question: 'jak dlouho'
+      }
+      {
         answer: ['I went'],
         question: 'šel jsem'
       },
