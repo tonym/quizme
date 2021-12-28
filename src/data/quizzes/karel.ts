@@ -30,7 +30,7 @@ const KarelQuiz: Quiz[] = [
         `
       },
       {
-        answer: ['yes'],
+        answer: ['yes', 'no'],
         question: `
           Karel č. měl 4 manželky.
           Poslední z nich, krásnou Elišku Pomořanskou, která byla silná jako muž, můžete vidět vidět ve filmu Noc na Karlštejně.
