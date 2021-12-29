@@ -2,12 +2,14 @@ import { FunctionalComponent, h, RefObject } from 'preact';
 import { useLayoutEffect, useRef, useState } from 'preact/hooks';
 import Fuse from 'fuse.js';
 import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import Check from '@mui/icons-material/Check';
+import Container from '@mui/material/Container';
 import PlayCircle from '@mui/icons-material/PlayCircle';
 import PlayCircleOutline from '@mui/icons-material/PlayCircleOutline';
 import Shuffle from '@mui/icons-material/Shuffle';
@@ -34,10 +36,13 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   const [playing, setPlaying] = useState(false);
   const [nextDisabled, setNextDisabled] = useState(true);
   const [question, setQuestion] = useState<QuizQuestion>();
+  const [pitch, setPitch] = useState(1);
+  const [rate, setRate] = useState(0.8);
   const [result, setResult] = useState<any>();
   const [resultColor, setResultColor] = useState('success');
   const [shuffle, setShuffle] = useState(true);
   const [threshold, setThreshold] = useState(0.6);
+  const [volume, setVolume] = useState(8);
 
   const answerInputRef: RefObject<HTMLInputElement> = useRef(null);
   const playButtonRef: RefObject<HTMLButtonElement> = useRef(null);
@@ -51,9 +56,24 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
     setAnswer(value);
   }
 
+  function changePitch(event: Event): any {
+    const { value } = event.target as HTMLInputElement;
+    setPitch(+value);
+  }
+
+  function changeRate(event: Event): any {
+    const { value } = event.target as HTMLInputElement;
+    setRate(+value);
+  }
+
   function changeThreshold(event: Event): any {
     const { value } = event.target as HTMLInputElement;
     setThreshold(+value);
+  }
+
+  function changeVolume(event: Event): any {
+    const { value } = event.target as HTMLInputElement;
+    setVolume(+value);
   }
 
   function checkAnswer(): boolean {
@@ -83,7 +103,10 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
       setQuestion(currentQuestion);
       setAnswer('');
       setPlaying(true);
+      quizReader.pitch = pitch;
+      quizReader.rate = rate;
       quizReader.text = currentQuestion.question;
+      quizReader.volume = volume;
       window.speechSynthesis.speak(quizReader);
     }
     answerInputRef.current && answerInputRef.current.focus();
@@ -179,6 +202,24 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
           <Typography align="center" sx={{ color: resultColor, mt: 8 }} variant="h4">
             {result}
           </Typography>
+          <AppBar color="transparent" elevation={0} position="fixed" sx={{ bottom: 0, paddingBottom: 6, top: 'auto' }}>
+            <Container>
+              <Box sx={{ alignItems: 'center', display: 'flex', gap: 4, width: '100%' }}>
+                <Box sx={{ display: 'flex', flex: 1, gap: 1 }}>
+                  <Typography>Pitch:</Typography>
+                  <Slider min={0.1} max={2} onChange={changePitch} value={pitch} valueLabelDisplay="auto" step={0.1}></Slider>
+                </Box>
+                <Box sx={{ display: 'flex', flex: 1, gap: 1 }}>
+                  <Typography>Rate:</Typography>
+                  <Slider min={0.1} max={2} onChange={changeRate} value={rate} valueLabelDisplay="auto" step={0.1}></Slider>
+                </Box>
+                <Box sx={{ display: 'flex', flex: 1, gap: 1 }}>
+                  <Typography>Volume:</Typography>
+                  <Slider min={0} max={10} onChange={changeVolume} value={volume} valueLabelDisplay="auto" step={1}></Slider>
+                </Box>
+              </Box>
+            </Container>
+          </AppBar>
         </form>
       ) : null}
     </Box>
