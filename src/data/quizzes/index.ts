@@ -3,6 +3,7 @@ import DateAndTimeQuiz from './date_and_time';
 import KarelQuiz from './karel';
 import NumbersQuiz from './numbers';
 import PhrasesQuiz from './phrases';
+import PlacesQuiz from './places';
 import PrepositionsQuiz from './prepositions';
 import QuestionWordsQuiz from './question_words';
 import TripQuiz from './trip';
@@ -15,6 +16,7 @@ function prepareQuizzes(): Quiz[] {
     ...KarelQuiz,
     ...NumbersQuiz,
     ...PhrasesQuiz,
+    ...PlacesQuiz,
     ...PrepositionsQuiz,
     ...QuestionWordsQuiz,
     ...TripQuiz
