@@ -4,6 +4,8 @@ import Fuse from 'fuse.js';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import ArrowForward from '@mui/icons-material/ArrowForward';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -40,6 +42,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   const [rate, setRate] = useState(0.8);
   const [result, setResult] = useState<any>();
   const [resultColor, setResultColor] = useState('success');
+  const [showQuestion, setShowQuestion] = useState(false);
   const [shuffle, setShuffle] = useState(true);
   const [threshold, setThreshold] = useState(0.6);
   const [volume, setVolume] = useState(8);
@@ -64,6 +67,10 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   function changeRate(event: Event): any {
     const { value } = event.target as HTMLInputElement;
     setRate(+value);
+  }
+
+  function changeShowQuestion(event: React.ChangeEvent<HTMLInputElement>, checked: boolean): any {
+    setShowQuestion(checked);
   }
 
   function changeThreshold(event: Event): any {
@@ -108,6 +115,10 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
       quizReader.text = currentQuestion.question;
       quizReader.volume = volume;
       window.speechSynthesis.speak(quizReader);
+      if (showQuestion) {
+        setResult(currentQuestion.question);
+        setResultColor('inherit');
+      }
     }
     answerInputRef.current && answerInputRef.current.focus();
   }
@@ -163,18 +174,19 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
             {quiz.description}
           </Typography>
           <TextField fullWidth onKeyUp={changeAnswer} inputRef={answerInputRef} value={answer} variant="outlined"></TextField>
-          <Box sx={{ alignItems: 'center', display: 'flex', mt: 0.5 }}>
-            <Box sx={{ mr: 1 }}>
+          <Box sx={{ alignItems: 'center', display: 'flex', gap: 2, mt: 0.5 }}>
+            <Box>
               <IconButton onClick={playQuestion} ref={playButtonRef} size="large">
                 {playing ? <PlayCircle /> : <PlayCircleOutline />}
               </IconButton>
             </Box>
-            <Box sx={{ mr: 2 }}>
+            <Box>
               <IconButton onClick={toggleShuffle} size="large">
                 {shuffle ? <ShuffleOn /> : <Shuffle />}
               </IconButton>
             </Box>
-            <Box sx={{ flex: 1 }}>
+            <Box sx={{ alignItems: 'center', display: 'flex', gap: 1, flex: 1, mr: 1 }}>
+              <Typography>Threshold:</Typography>
               <Slider
                 marks={true}
                 max={1}
@@ -187,8 +199,10 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
                 valueLabelDisplay="auto"
               />
             </Box>
-            <Box sx={{ flex: 3 }}></Box>
-            <Box sx={{ mr: 1 }}>
+            <Box sx={{ flex: 2 }}>
+              <FormControlLabel control={<Checkbox onChange={changeShowQuestion} checked={showQuestion} />} label="Show question" />
+            </Box>
+            <Box>
               <IconButton disabled={answer.length === 0} size="large" type="submit">
                 <Check />
               </IconButton>

@@ -12,6 +12,7 @@ export const Quiz: FunctionalComponent = () => {
   const [focus, setFocus] = useState(false);
 
   const handleChange = (event: SelectChangeEvent): void => {
+    setQuiz(-1);
     setQuiz(+event.target.value);
     setFocus(false);
   };
