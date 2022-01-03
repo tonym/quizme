@@ -16,6 +16,7 @@ import PlayCircle from '@mui/icons-material/PlayCircle';
 import PlayCircleOutline from '@mui/icons-material/PlayCircleOutline';
 import Shuffle from '@mui/icons-material/Shuffle';
 import ShuffleOn from '@mui/icons-material/ShuffleOn';
+import { Flashcard } from '../flashcard';
 import { Quiz, QuizQuestion } from '../../types';
 
 interface QuizPlayerProps {
@@ -116,7 +117,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
       quizReader.volume = volume;
       window.speechSynthesis.speak(quizReader);
       if (showQuestion) {
-        setResult(currentQuestion.question);
+        setResult(<Flashcard quizQuestion={currentQuestion} />);
         setResultColor('inherit');
       }
     }
