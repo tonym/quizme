@@ -36,6 +36,9 @@ export const Header: FunctionalComponent = () => {
             <QButton href="/" variant="text">
               Domů
             </QButton>
+            <QButton href="/nouns" variant="text">
+              Podstatná jména
+            </QButton>
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
               {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>

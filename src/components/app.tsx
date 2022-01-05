@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, styled, Theme, ThemeProvider } from '@mui/material/styles';
 import ColorModeContext from '../contexts/color-mode-context';
 import { Home } from '../routes/home/home';
+import { Nouns } from '../routes/nouns/nouns';
 import NotFoundPage from '../routes/notfound';
 import { Header } from './header/';
 
@@ -19,6 +20,7 @@ const App: FunctionalComponent = () => {
       <Header />
       <Router>
         <Route path="/" component={Home} />
+        <Route path="/nouns" component={Nouns} />
         <NotFoundPage default />
       </Router>
     </QContainer>

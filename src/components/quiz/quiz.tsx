@@ -4,10 +4,16 @@ import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { quizzes } from '../../data/quizzes';
 import { QuizPlayer } from '../quiz-player';
+import { Quiz as QuizType } from '../../types';
 
-export const Quiz: FunctionalComponent = () => {
+interface QuizProps {
+  quizzes: QuizType[];
+}
+
+export const Quiz: FunctionalComponent<QuizProps> = props => {
+  const { quizzes } = props;
+
   const [quiz, setQuiz] = useState(-1);
   const [focus, setFocus] = useState(false);
 
@@ -29,7 +35,7 @@ export const Quiz: FunctionalComponent = () => {
           variant="outlined"
         >
           <MenuItem key="-1" value="-1">
-            Select quiz
+            Vybrat
           </MenuItem>
           {quizzes.map((quiz, index) => {
             return (

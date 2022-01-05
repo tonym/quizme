@@ -171,7 +171,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
     <Box sx={{ paddingTop: '32px' }}>
       {quiz ? (
         <form id="quiz-form" onSubmit={submitForm}>
-          <Typography gutterBottom variant="h6">
+          <Typography gutterBottom variant="subtitle1">
             {quiz.description}
           </Typography>
           <TextField fullWidth onKeyUp={changeAnswer} inputRef={answerInputRef} value={answer} variant="outlined"></TextField>
@@ -201,7 +201,7 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
               />
             </Box>
             <Box sx={{ flex: 2 }}>
-              <FormControlLabel control={<Checkbox onChange={changeShowQuestion} checked={showQuestion} />} label="Show question" />
+              <FormControlLabel control={<Checkbox onChange={changeShowQuestion} checked={showQuestion} />} label="Zobrazit kartu" />
             </Box>
             <Box>
               <IconButton disabled={answer.length === 0} size="large" type="submit">
