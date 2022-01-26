@@ -1,5 +1,6 @@
 import { Quiz } from '../../types';
 import AdverbsQuiz from './adverbs';
+import ColorsQuiz from './colors';
 import DateAndTimeQuiz from './date_and_time';
 import HobbiesQuiz from './hobbies';
 import KarelQuiz from './karel';
@@ -15,6 +16,7 @@ export const quizzes: Quiz[] = prepareQuizzes();
 function prepareQuizzes(): Quiz[] {
   const quizzes: Quiz[] = [
     ...AdverbsQuiz,
+    ...ColorsQuiz,
     ...DateAndTimeQuiz,
     ...HobbiesQuiz,
     ...KarelQuiz,
