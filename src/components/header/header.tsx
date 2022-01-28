@@ -36,6 +36,9 @@ export const Header: FunctionalComponent = () => {
             <QButton href="/" variant="text">
               Domů
             </QButton>
+            <QButton href="/adjectives" variant="text">
+              Přídavná jména
+            </QButton>
             <QButton href="/nouns" variant="text">
               Podstatná jména
             </QButton>

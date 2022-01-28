@@ -44,8 +44,8 @@ export const QuizPlayer: FunctionalComponent<QuizPlayerProps> = props => {
   const [result, setResult] = useState<any>();
   const [resultColor, setResultColor] = useState('success');
   const [showQuestion, setShowQuestion] = useState(false);
-  const [shuffle, setShuffle] = useState(true);
-  const [threshold, setThreshold] = useState(0.6);
+  const [shuffle, setShuffle] = useState(false);
+  const [threshold, setThreshold] = useState(0.2);
   const [volume, setVolume] = useState(8);
 
   const answerInputRef: RefObject<HTMLInputElement> = useRef(null);
