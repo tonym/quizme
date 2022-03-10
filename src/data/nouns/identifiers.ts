@@ -1,4 +1,4 @@
-import { Quiz, QuizQuestion } from '../../types';
+import { Quiz } from '../../types';
 
 const IdentifiersTranslationQuiz: Quiz[] = [
   {
