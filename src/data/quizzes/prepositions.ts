@@ -38,6 +38,18 @@ const PrepositionsQuiz: Quiz[] = [
         question: 'zpátky'
       },
       {
+        answer: ['beyond'],
+        question: 'mimo'
+      },
+      {
+        answer: ['around'],
+        question: 'kolem'
+      },
+      {
+        answer: ['after'],
+        question: 'po'
+      },
+      {
         answer: ['on'],
         question: 'na'
       },
@@ -54,12 +66,20 @@ const PrepositionsQuiz: Quiz[] = [
         question: 'v'
       },
       {
+        answer: ['inside'],
+        question: 'uvnitř'
+      },
+      {
         answer: ['between'],
         question: 'mezi'
       },
       {
         answer: ['in front of', 'in front', 'before'],
         question: 'před'
+      },
+      {
+        answer: ['for'],
+        question: 'pro'
       },
       {
         answer: ['behind'],
@@ -70,12 +90,60 @@ const PrepositionsQuiz: Quiz[] = [
         question: 'pod'
       },
       {
+        answer: ['against'],
+        question: 'proti'
+      },
+      {
+        answer: ['down'],
+        question: 'dolů'
+      },
+      {
         answer: ['near'],
         question: 'blízko'
       },
       {
         answer: ['nearby'],
         question: 'poblíž'
+      },
+      {
+        answer: ['about'],
+        question: 'o'
+      },
+      {
+        answer: ['across', 'via'],
+        question: 'přes'
+      },
+      {
+        answer: ['as'],
+        question: 'jak'
+      },
+      {
+        answer: ['according to', 'by'],
+        question: 'podle'
+      },
+      {
+        answer: ['until'],
+        question: 'až'
+      },
+      {
+        answer: ['despite', 'in spite of'],
+        question: 'navzdory'
+      },
+      {
+        answer: ['during'],
+        question: 'během'
+      },
+      {
+        answer: ['except'],
+        question: 'vyjma'
+      },
+      {
+        answer: ['toward', 'to'],
+        question: 'k'
+      },
+      {
+        answer: ['into'],
+        question: 'do'
       }
     ]
   }
