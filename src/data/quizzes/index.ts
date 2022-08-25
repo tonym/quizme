@@ -2,6 +2,7 @@ import { Quiz } from '../../types';
 import AdverbsQuiz from './adverbs';
 import DateAndTimeQuiz from './date_and_time';
 import HobbiesQuiz from './hobbies';
+import MyDayQuiz from './myday';
 import NumbersQuiz from './numbers';
 import PlacesQuiz from './places';
 import PrepositionsQuiz from './prepositions';
@@ -15,6 +16,7 @@ function prepareQuizzes(): Quiz[] {
     ...AdverbsQuiz,
     ...DateAndTimeQuiz,
     ...HobbiesQuiz,
+    ...MyDayQuiz,
     ...NumbersQuiz,
     ...PlacesQuiz,
     ...PrepositionsQuiz,
