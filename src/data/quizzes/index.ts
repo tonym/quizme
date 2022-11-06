@@ -3,6 +3,7 @@ import AdverbsQuiz from './adverbs';
 import AdverbsOfTimeQuiz from './adverbs_of_time';
 import DateAndTimeQuiz from './date_and_time';
 import HobbiesQuiz from './hobbies';
+import MyDayQuiz from './myday';
 import NumbersQuiz from './numbers';
 import PlacesQuiz from './places';
 import PrepositionsQuiz from './prepositions';
@@ -17,6 +18,7 @@ function prepareQuizzes(): Quiz[] {
     ...AdverbsOfTimeQuiz,
     ...DateAndTimeQuiz,
     ...HobbiesQuiz,
+    ...MyDayQuiz,
     ...NumbersQuiz,
     ...PlacesQuiz,
     ...PrepositionsQuiz,
